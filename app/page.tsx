@@ -32,7 +32,7 @@ export default async function Home() {
   }`)
 
   return (
-    <main className="">
+    <main>
       <AllShipsTable data={data} />
     </main>
   )
