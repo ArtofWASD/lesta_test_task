@@ -1,33 +1,16 @@
+import ShipCard from "../shipCard/shipCard";
+
 const AllShipsTable = ({ data }: any) => {
   return (
     <div className="">
       <p>All ships table here</p>
-      <>
-        <table className="table-auto">
-          <thead>
-            <tr>
-              <th>Имя</th>
-              <th>Страна</th>
-              <th>Уровень</th>
-            </tr>
-          </thead>
-          {data?.data?.vehicles?.map((item: any) => (
-            <tbody key={item.id}>
-              <tr key={item.title}>
-                <td>{item.title}</td>
-              </tr>
-              <tr>
-                <td>{item.nation.name}</td>
-              </tr>
-              <tr>
-                <td>{item.level}</td>
-              </tr>
-            </tbody>
-          ))}
-        </table>
-      </>
+      {data.data.vehicles.map((ship: any) => (
+        <div key={ship.title}>
+          <ShipCard ship={ship} />
+        </div>
+      ))}
     </div>
-  )
-}
+  );
+};
 
-export default AllShipsTable
+export default AllShipsTable;

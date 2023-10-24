@@ -1,4 +1,9 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {
+    images: {
+        formats:['image/webp'],
+        domains: ['mk-glossary.korabli.su'],
+      },
+}
 
 module.exports = nextConfig
