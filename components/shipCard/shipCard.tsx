@@ -1,24 +1,32 @@
-"use client";
-import React from "react";
-import Image from "next/image";
-import { renameNation, renameShipClass } from "@/utils/translateFuncHandlers";
+"use client"
+import React from "react"
+import Image from "next/image"
+import { renameNation, renameShipClass } from "@/utils/translateFuncHandlers"
 
 const ShipCard = ({ ship }: any) => {
   return (
-    <div>
+    <>
       {ship && (
-        <div className="flex gap-2 border-2 rounded-lg p-4 justify-center items-center my-2 max-w-auto">
+        <div className="flex gap-3 border-2 rounded-lg p-2 justify-around items-end my-2 max-w-auto">
           <p>Имя корабля: {ship.title.replace(/.\(.+\)/, "")}</p>
-          <p className="flex items-center">
-            Класс: {renameShipClass(ship.type?.name)}
+          <div className="flex items-center gap-1 justify-self-start">
             <Image
               src={`https:${ship.type?.icons.default}`}
+              alt={ship?.title}
+              height={25}
+              width={25}
+            />
+            {renameShipClass(ship.type?.name)}
+          </div>
+          <div className="flex items-center">
+            <Image
+              src={`https:${ship.nation?.icons.small}`}
               alt={ship?.title}
               height={40}
               width={30}
             />
-          </p>
-          <p>Нация: {renameNation(ship.nation?.name)}</p>
+            {renameNation(ship.nation?.name)}
+          </div>
           <p>Уровень: {ship.level}</p>
           <Image
             src={`https:${ship.icons?.medium}`}
@@ -28,8 +36,8 @@ const ShipCard = ({ ship }: any) => {
           />
         </div>
       )}
-    </div>
-  );
-};
+    </>
+  )
+}
 
-export default ShipCard;
+export default ShipCard

@@ -32,7 +32,7 @@ export default async function Home() {
   }`)
 
   return (
-    <main>
+    <main className="grid justify-center items-center">
       <AllShipsTable data={data} />
     </main>
   )
