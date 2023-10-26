@@ -3,12 +3,13 @@ import { Fragment, useState } from "react"
 import { Listbox, Transition } from "@headlessui/react"
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid"
 
-const people = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+const people = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 const PropertyListBox = ({ onChange }: any) => {
+
   const [selected, setSelected] = useState(0)
   const handleChange = (selected: any) => {
-    onChange(selected) // callback-функция
-  }
+    onChange(selected)
+  }  
   return (
     <div className="">
       <Listbox

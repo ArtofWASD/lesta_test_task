@@ -4,6 +4,7 @@ import { shipsRequest } from "@/utils/qraphQl"
 export default async function Home() {
   const data = await shipsRequest(`query {
     vehicles {
+      id
       title
       description
       icons {

@@ -48,7 +48,7 @@ const ShipCard = ({ ship }: shipProps) => {
             {renameShipClass(ship.type?.name)}
           </div>
           <div className="flex items-center">
-          <p className="pr-1">Страна:</p>
+            <p className="pr-1">Страна:</p>
             <Image
               src={`https:${ship.nation?.icons.small}`}
               alt={ship?.title}

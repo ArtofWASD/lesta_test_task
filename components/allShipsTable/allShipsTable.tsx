@@ -2,10 +2,12 @@
 import { useEffect, useState } from "react"
 import PropertyListBox from "../propertyListBox/propertyListBox"
 import ShipCard from "../shipCard/shipCard"
+import Link from "next/link"
 interface shipDataProps {
   data: {
     data: {
       vehicles: Array<{
+        id: string
         title: string
         description: string
         icons: {
@@ -36,17 +38,20 @@ interface shipDataProps {
 }
 
 const AllShipsTable = ({ data }: shipDataProps) => {
-  const [filteredShips, setFilteredShips] = useState<any>([])
+  const shipData = data.data.vehicles
+  const [filteredShips, setFilteredShips] = useState<any>(shipData)
   const [shipLevel, setShipLevel] = useState(0)
   const handelchangeShipLevel = (value: number) => {
     setShipLevel(value)
   }
 
   useEffect(() => {
-    const filteredShips = data.data.vehicles.filter((ship) => ship.level === shipLevel)
-    setFilteredShips(filteredShips)
-  }, [data.data.vehicles, shipLevel])
-
+    const ships = shipData.filter((ship) => ship.level === shipLevel)
+    if (shipLevel) {
+      setFilteredShips(ships)
+    }
+  }, [shipData, shipLevel])
+  
   return (
     <div className="grid grid-flow-row max-w-screen-md justify-center items-center py-4">
       <div className="flex gap-6 justify-between">
@@ -54,19 +59,21 @@ const AllShipsTable = ({ data }: shipDataProps) => {
           <p>Уровень корабля </p>
           <PropertyListBox onChange={handelchangeShipLevel} />
         </div>
-        <div className="flex gap-2 justify-center items-center">
+        {/* <div className="flex gap-2 justify-center items-center">
           <p>Нация </p>
           <PropertyListBox />
         </div>
         <div className="flex gap-2 justify-center items-center">
           <p>Класс </p>
           <PropertyListBox />
-        </div>
+        </div> */}
       </div>
       <div className="ship-list overflow-y-scroll mt-5 pr-2">
-        {filteredShips.map((ship:any) => (
+        {filteredShips.map((ship: any) => (
           <div key={ship.title}>
-            <ShipCard ship={ship} />
+            <Link href={`/ship/${ship.id}`}>
+              <ShipCard ship={ship} />
+            </Link>
           </div>
         ))}
       </div>
