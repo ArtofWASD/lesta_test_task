@@ -2,7 +2,7 @@
 const nextConfig = {
     images: {
         formats:['image/webp'],
-        domains: ['mk-glossary.korabli.su'],
+        domains: ['mk-glossary.korabli.su', 'glossary.korabli.su'],
       },
 }
 
