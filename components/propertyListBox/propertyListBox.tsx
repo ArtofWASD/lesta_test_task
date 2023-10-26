@@ -31,22 +31,22 @@ const PropertyListBox = ({ onChange, data }: any) => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0">
             <Listbox.Options className="absolute w-48 mt-1 max-h-60 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-              {data.map((level:any) => (
+              {data.map((item:any) => (
                 <Listbox.Option
-                  key={level}
+                  key={item}
                   className={({ active }) =>
                     `relative cursor-default select-none py-2 pl-10 pr-4 ${
                       active ? "bg-amber-100 text-amber-900" : "text-gray-900"
                     }`
                   }
-                  value={level}>
+                  value={item}>
                   {({ selected }) => (
                     <>
                       <span
                         className={`block truncate ${
                           selected ? "font-medium" : "font-normal"
                         }`}>
-                        {level}
+                        {item}
                       </span>
                       {selected ? (
                         <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
