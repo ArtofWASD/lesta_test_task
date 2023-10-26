@@ -39,31 +39,53 @@ interface shipDataProps {
 
 const AllShipsTable = ({ data }: shipDataProps) => {
   const shipData = data.data.vehicles
+  const shipLevels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+  const shipCountries = [
+    "Япония",
+    "США",
+    "Германия",
+    "Англия",
+    "Пан-Азия",
+    "Италия",
+    "Советский союз",
+    "Франция",
+    "Содружество наций",
+    "Панамериканские",
+    "Европа",
+    "Голландия",
+    "Испания",
+  ]
   const [filteredShips, setFilteredShips] = useState<any>(shipData)
   const [shipLevel, setShipLevel] = useState(0)
+  const [shipCountry, setCountry] = useState('СССР')
+
   const handelchangeShipLevel = (value: number) => {
     setShipLevel(value)
   }
+  const handelchangeCountry = (value: string) => {
+    setCountry(value)
+  }
 
   useEffect(() => {
-    const ships = shipData.filter((ship) => ship.level === shipLevel)
-    if (shipLevel) {
+    const ships = shipData.filter((ship) => ship.level === shipLevel || ship.nation.title === shipCountry)
+
+    if (shipLevel || shipCountry) {
       setFilteredShips(ships)
     }
-  }, [shipData, shipLevel])
-  
+  }, [shipData, shipLevel, shipCountry])
+
   return (
     <div className="grid grid-flow-row max-w-screen-md justify-center items-center py-4">
       <div className="flex gap-6 justify-between">
         <div className="flex gap-2 justify-center items-center">
           <p>Уровень корабля </p>
-          <PropertyListBox onChange={handelchangeShipLevel} />
-        </div>
-        {/* <div className="flex gap-2 justify-center items-center">
-          <p>Нация </p>
-          <PropertyListBox />
+          <PropertyListBox onChange={handelchangeShipLevel} data={shipLevels} />
         </div>
         <div className="flex gap-2 justify-center items-center">
+          <p>Нация </p>
+          <PropertyListBox onChange={handelchangeCountry} data={shipCountries}/>
+        </div>
+        {/* <div className="flex gap-2 justify-center items-center">
           <p>Класс </p>
           <PropertyListBox />
         </div> */}
