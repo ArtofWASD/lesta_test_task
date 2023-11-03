@@ -36,7 +36,7 @@ const ShipCard = ({ ship }: shipProps) => {
     <>
       {ship && (
         <div className="grid grid-cols-[25%,15%,15%,10%,15%,] gap-3 border-2 rounded-lg p-2 justify-around items-end my-2 max-w-auto">
-          <p>Название: {ship.title.replace(/.\(.+\)/, "")}</p>
+          <p>Название: {ship.title?.replace(/.\(.+\)/, "")}</p>
           <div className="flex items-center gap-1 justify-self-start">
             <p className="pr-1">Класс:</p>
             <Image
