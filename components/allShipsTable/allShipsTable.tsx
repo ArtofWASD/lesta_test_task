@@ -36,62 +36,105 @@ interface shipDataProps {
     }
   }
 }
-
+interface shipProps {
+  id: string
+  title: string
+  description: string
+  icons: {
+    large: string
+    medium: string
+  }
+  level: number
+  type: {
+    name: string
+    title: string
+    icons: {
+      default: string
+    }
+  }
+  nation: {
+    name: string
+    title: string
+    color: string
+    icons: {
+      small: string
+      medium: string
+      large: string
+    }
+  }
+}
 const AllShipsTable = ({ data }: shipDataProps) => {
-  const shipData = data.data.vehicles
   const shipLevels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
   const shipCountries = [
-    "Япония",
+    "Japan",
     "США",
     "Германия",
     "Англия",
     "Пан-Азия",
     "Италия",
     "Советский союз",
-    "Франция",
+    "France",
     "Содружество наций",
     "Панамериканские",
     "Европа",
     "Голландия",
     "Испания",
   ]
-  const [filteredShips, setFilteredShips] = useState<any>(shipData)
-  const [shipLevel, setShipLevel] = useState(0)
-  const [shipCountry, setCountry] = useState('СССР')
+  const shipClasses = ["Destroyer", "Submarine", "Cruiser", "Battleship", "Aircraft Carrier"]
+  const [filteredShips, setFilteredShips] = useState<any>(data.data.vehicles)
+  const [shipLevel, setShipLevel] = useState<number>(0)
+  const [shipCountry, setCountry] = useState<string>("")
+  const [shipClass, setShipClass] = useState<string>("")
 
-  const handelchangeShipLevel = (value: number) => {
+  const refilterShips = () => {
+    setFilteredShips(
+      data.data.vehicles.filter((item) => {
+        item.level === shipLevel ||
+          item.nation.title === shipCountry ||
+          item.type.title === shipClass
+      }),
+    )
+  }
+
+  const handleChangeShipLevel = (value: number) => {
     setShipLevel(value)
-  }
-  const handelchangeCountry = (value: string) => {
-    setCountry(value)
-  }
-
-  useEffect(() => {
-    const ships = shipData.filter((ship) => ship.level === shipLevel || ship.nation.title === shipCountry)
-
-    if (shipLevel || shipCountry) {
-      setFilteredShips(ships)
+    if (filteredShips.length === 0) {
+      refilterShips()
     }
-  }, [shipData, shipLevel, shipCountry])
-
+    setFilteredShips(filteredShips.filter((ship: any) => ship.level === value))
+  }
+  const handleChangeCountry = (value: string) => {
+    setCountry(value)
+    if (filteredShips.length === 0) {
+      refilterShips()
+    }
+    setFilteredShips(filteredShips.filter((ship: any) => ship.nation.title === value))
+  }
+  const handleChangeShipClass = (value: string) => {
+    setShipClass(value)
+    if (filteredShips.length == 0) {
+      refilterShips()
+    }
+    setFilteredShips(filteredShips.filter((ship: any) => ship.type.title === value))
+  }
   return (
     <div className="grid grid-flow-row max-w-screen-md justify-center items-center py-4">
       <div className="flex gap-6 justify-between">
         <div className="flex gap-2 justify-center items-center">
           <p>Уровень корабля </p>
-          <PropertyListBox onChange={handelchangeShipLevel} data={shipLevels} />
+          <PropertyListBox onChange={handleChangeShipLevel} data={shipLevels} />
         </div>
         <div className="flex gap-2 justify-center items-center">
           <p>Нация </p>
-          <PropertyListBox onChange={handelchangeCountry} data={shipCountries}/>
+          <PropertyListBox onChange={handleChangeCountry} data={shipCountries} />
         </div>
-        {/* <div className="flex gap-2 justify-center items-center">
+        <div className="flex gap-2 justify-center items-center">
           <p>Класс </p>
-          <PropertyListBox />
-        </div> */}
+          <PropertyListBox onChange={handleChangeShipClass} data={shipClasses} />
+        </div>
       </div>
       <div className="ship-list overflow-y-scroll mt-5 pr-2">
-        {filteredShips.map((ship: any) => (
+        {filteredShips.map((ship: shipProps) => (
           <div key={ship.title}>
             <Link href={`/ship/${ship.id}`}>
               <ShipCard ship={ship} />
